@@ -1,0 +1,55 @@
+site_name: AI Weather forecast
+plugins:
+  - charts
+  - search
+  - minify:
+      minify_html: true
+
+extra_javascript:
+  - https://cdn.jsdelivr.net/npm/vega@5
+  - https://cdn.jsdelivr.net/npm/vega-lite@5
+  - https://cdn.jsdelivr.net/npm/vega-embed@6
+
+markdown_extensions:
+  - admonition
+  - codehilite:
+      guess_lang: false
+  - toc:
+      permalink: true
+  - footnotes
+  - mdx_include:
+      base_path: docs
+  - pymdownx.superfences:
+      custom_fences:
+        - name: vegalite
+          class: vegalite
+          format: !!python/name:mkdocs_charts_plugin.fences.fence_vegalite
+
+theme:
+  name: 'material'
+  features:
+    - header.autohide
+    - navigation.footer
+    - navigation.instant
+    - navigation.instant.prefetch
+  font:
+    text: 'Ubuntu'
+    code: 'Ubuntu Mono'
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: light
+      primary: indigo
+      accent: orange
+      toggle:
+        icon: material/toggle-switch-off-outline
+        name: Embrace the dark side
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: indigo
+      accent: amber
+      toggle:
+        icon: material/toggle-switch
+        name: Switch to light mode
+
+extra:
+  generator: false

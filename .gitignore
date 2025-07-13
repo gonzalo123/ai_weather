@@ -1,0 +1,17 @@
+/venv/
+
+src/logs/*.log*
+src/env/local/.env
+
+src/repl_state
+repl_state
+.deleteme
+
+# Test artifacts
+.coverage
+htmlcov/
+.pytest_cache/
+*.coverage
+coverage.xml
+.tox/
+.cache
