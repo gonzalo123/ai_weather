@@ -357,4 +357,4 @@ For the visualization I'm using [MkDocs](https://squidfunk.github.io/mkdocs-mate
 ![](img/img1.png)
 ![](img/img2.png)
 
-For AI, I'm using Claude 3.5 Sonnet, provided by Amazon Bedrock. For the experiment it's enough, but if you create a cron job to run the agent every day, you'll have your 5-day forecasting system ready to go. The project tries to show how to use AI agents to solve real-world problems, and how to integrate them with external data sources and tools. The agent can be extended to include more advanced features, such as integrating with other APIs or using more complex machine learning models for weather prediction.
+For AI, I'm using Claude 4 Sonnet, provided by Amazon Bedrock. For the experiment it's enough, but if you create a cron job to run the agent every day, you'll have your 5-day forecasting system ready to go. The project tries to show how to use AI agents to solve real-world problems, and how to integrate them with external data sources and tools. The agent can be extended to include more advanced features, such as integrating with other APIs or using more complex machine learning models for weather prediction.
