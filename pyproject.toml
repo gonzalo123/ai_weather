@@ -6,7 +6,7 @@ authors = [
     {name = "Gonzalo Ayuso",email = "gonzalo123@gmail.com"}
 ]
 readme = "README.md"
-requires-python = ">=3.13"
+requires-python = ">=3.13,<4.0"
 dependencies = [
     "strands-agents (>=0.3.0,<0.4.0)",
     "strands-agents-tools (>=0.1.9,<0.2.0)",
@@ -17,6 +17,7 @@ dependencies = [
     "mdx-include (>=1.4.2,<2.0.0)",
     "mkdocs-minify-plugin (>=0.8.0,<0.9.0)",
     "mkdocs-charts-plugin (>=0.0.12,<0.0.13)",
+    "fastmcp (>=2.10.5,<3.0.0)",
 ]
 
 

@@ -11,6 +11,10 @@ extra_javascript:
   - https://cdn.jsdelivr.net/npm/vega-embed@6
 
 markdown_extensions:
+  - attr_list
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - tables
   - admonition
   - codehilite:
       guess_lang: false
@@ -28,6 +32,7 @@ markdown_extensions:
 theme:
   name: 'material'
   features:
+    - navigation.tabs
     - header.autohide
     - navigation.footer
     - navigation.instant

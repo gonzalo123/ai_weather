@@ -357,4 +357,67 @@ For the visualization I'm using [MkDocs](https://squidfunk.github.io/mkdocs-mate
 ![](img/img1.png)
 ![](img/img2.png)
 
-For AI, I'm using Claude 3.5 Sonnet, provided by Amazon Bedrock. For the experiment it's enough, but if you create a cron job to run the agent every day, you'll have your 5-day forecasting system ready to go. The project tries to show how to use AI agents to solve real-world problems, and how to integrate them with external data sources and tools. The agent can be extended to include more advanced features, such as integrating with other APIs or using more complex machine learning models for weather prediction.
+For AI, I'm using Claude 4 Sonnet, provided by Amazon Bedrock. For the experiment it's enough, but if you create a cron job to run the agent every day, you'll have your 5-day forecasting system ready to go. The project tries to show how to use AI agents to solve real-world problems, and how to integrate them with external data sources and tools. The agent can be extended to include more advanced features, such as integrating with other APIs or using more complex machine learning models for weather prediction.
+
+## Extra
+
+First I've done the example building a tool to fetch weather data, but we also can use a MCP, the standard protocol to integrate tools in AI agents. 
+I've created a MCP server using FastMCP
+
+```python
+from datetime import date
+
+from fastmcp import FastMCP
+from modules.weather.tools import get_hourly_weather_data_tool
+from modules.weather.models import MeteoData
+from settings import MY_LATITUDE, MY_LONGITUDE
+
+mcp = FastMCP("FastMCP Weather Agent", version="1.0.0")
+
+
+@mcp.tool(description="Get hourly weather data for a given date range.")
+def get_hourly_weather_data(from_date: date, to_date: date) -> MeteoData:
+    return get_hourly_weather_data_tool(
+        latitude=MY_LATITUDE,
+        longitude=MY_LONGITUDE,
+        from_date=from_date,
+        to_date=to_date)
+
+if __name__ == "__main__":
+    mcp.run(transport="streamable-http", host="127.0.0.1", port=8888, path="/mcp")
+```
+
+And I've created a new client to interact with the MCP server:
+
+```python
+def ai_mcp(
+        system_prompt: str,
+        user_prompt: str,
+        read_timeout: int = 300,
+        connect_timeout: int = 60,
+        max_attempts: int = 5) -> AgentResult:
+
+    def create_streamable_http_transport():
+        return streamablehttp_client("http://localhost:8888/mcp/")
+
+    streamable_http_mcp_client = MCPClient(create_streamable_http_transport)
+
+    with streamable_http_mcp_client:
+        base_tools = [calculator, think, python_repl, file_write, current_time]
+        mcp_tools = streamable_http_mcp_client.list_tools_sync()
+        logger.info(f"Available MCP tools: {[tool.tool_name for tool in mcp_tools]}")
+        all_tools = base_tools + mcp_tools
+
+        bedrock_model = get_bedrock_model(
+            read_timeout=read_timeout,
+            connect_timeout=connect_timeout,
+            max_attempts=max_attempts
+        )
+
+        agent = Agent(
+            model=bedrock_model,
+            tools=all_tools,
+            system_prompt=system_prompt
+        )
+        return agent(user_prompt)
+```

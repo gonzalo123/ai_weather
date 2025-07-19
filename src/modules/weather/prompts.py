@@ -1,23 +1,8 @@
-PROMPT_TOOLS = f"""
-## Tools available for the AI agent
-
-You have access to the following tools:
-- **calculator**: for performing mathematical and financial calculations.
-- **think**: for reflecting on data and generating ideas.
-- **file_write**: for saving results and analyses to files.
-- **python_repl**: for executing Python code and performing advanced analyses.
-    You can use python_repl to perform complex calculations, statistical analyses, or any other task requiring programming.
-    You have access to the pandas library for data manipulation and scikit-learn for statistical analysis and machine learning.
-- **get_hourly_weather_data**: for obtaining hourly weather data at my location.
-"""
-
 SYSTEM_PROMPT = f"""
 You are an expert meteorologist capable of processing data from an external API and making weather predictions.
 Reflect always on the data for generating accurate and useful forecasts.
 Limit all responses strictly to the information and context provided.
 Do not generate information outside the data or the described scope.
-
-{PROMPT_TOOLS}
 """
 
 FORECAST_PROMPT = f"""
@@ -50,29 +35,8 @@ You will generate a visual weather report in Markdown format. The report must be
 - Always include one or more graphs to increase visual impact and understanding of the data.
 
 ### Graph requirements
-- Use **Vega-Lite v5** for all graphs. Generate valid and working JSON configuration.
+- Use **Vega-Lite v6** for all graphs. Generate valid and working JSON configuration.
 - Embed the JSON inline, properly formatted inside a code block.
-- Ensure JSON is minimal, clean, and error-free. The graph must render directly in vega-embed without changes.
-
-### Best practices for Vega-Lite:
-- Ensure that json is valid according to the Vega-Lite schema and can be rendered in a browser.
-- **Avoid** using the same axis ("y") for multiple fields** in layered charts unless properly handled.
-- Avoid "area" plots for secondary metrics in dual-axis charts (they can obscure the primary metric)
-- Prefer line charts for secondary metrics in layered visualizations
-- Use area charts only for single-metric visualizations or as background/context layers
-- Use $schema `https://vega.github.io/schema/vega-lite/v6.json`
-- When displaying two metrics in the same chart (e.g., temperature and humidity):
-  - Do not bind both variables to the same `y` channel unless using `y2` or layering with correct axis separation.
-- Always include:
-  - A meaningful title
-  - Tooltips for interaction
-  - Proper axis titles and domain scaling
-- Be creative with the chart types: go beyond simple bar or line charts. Explore area, layered, radial, or combination charts that highlight insights and add a “wow” factor.
-#### CRITICAL: For dual-axis charts
-When using two different metrics with different scales:
-- MUST include: "resolve": {{{{"scale": {{{{"y": "independent"}}}}}}}}
-- MUST specify: "axis": {{{{"orient": "right"}}}} for the secondary Y metric
-- Layer order: background metric first, primary metric second
 
 ### Commentary
 - After each graph, include a **blockquote** that explains:

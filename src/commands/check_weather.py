@@ -3,7 +3,7 @@ import logging
 import click
 
 from core.aws import setup_aws_conf
-from modules.weather.main import ai
+from modules.weather.main import ai, ai_mcp
 from modules.weather.prompts import SYSTEM_PROMPT
 from settings import AWS_ASSUME_ROLE, AWS_REGION, AWS_PROFILE_NAME, AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY
 
@@ -21,6 +21,6 @@ def run():
     )
     logger.info(f"Check agent weather.")
 
-    _ = ai(
+    _ = ai_mcp(
         system_prompt=SYSTEM_PROMPT,
         user_prompt="What will the weather be like tomorrow?")
