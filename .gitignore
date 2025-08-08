@@ -1,7 +1,6 @@
 /venv/
 
 src/logs/*.log*
-src/env/local/.env
 
 src/repl_state
 repl_state
